@@ -24,6 +24,11 @@ year = "2026",
 url = "https://aclanthology.org/2026.cl4health-1",
 }
 ```
+### Participating Institutions
+<div>
+  <img src="https://raw.githubusercontent.com/Scholarly-Code/pcd-diagnosis-llm-study/main/ack.png" alt="acknowledgments", width="380px">
+</div>
+
 
 ### License
 <a href="https://opensource.org/licenses/MIT">
