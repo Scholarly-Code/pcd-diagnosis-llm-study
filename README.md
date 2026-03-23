@@ -6,7 +6,7 @@
   <img src="flowchart.png" alt="Experimental Task Design">
 </p> -->
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Scholarly-Code/pcd-diagnosis-llm-study/main/PCD_Flowchart-Copy-ezgif.com-loop-count.gif" alt="My GIF" >
+  <img src="https://raw.githubusercontent.com/Scholarly-Code/pcd-diagnosis-llm-study/main/PCD_Flowchart.gif" alt="My GIF" >
 </div>
 <p align="center"><b>Figure 1: Study pipeline showing cohort curation and anonymization of first-visit clinical notes, zero-shot inference with five open-source LLMs. Subsequently, quantitative evaluation and clinician-led qualitative review of model outputs are reported in this study.</b></p>
 
