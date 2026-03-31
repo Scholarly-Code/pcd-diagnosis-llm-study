@@ -12,16 +12,23 @@
 
 
 ### 📑 Citation
-Please consider citing 📑 our paper if our repository is helpful to your work.
+Please consider citing 📑 our papers if our repository is helpful to your work.
 ```bibtex
-@inproceedings{rajwal-etal-2026-diagnostic,
-title = "Diagnostic Reasoning with Large Language Models for a Rare Disease: Case Study of Primary Ciliary Dyskinesia",
-author = "Rajwal, Swati
-and Fain, Mary Ellen
-and Guglani, Lokesh
-and Sarker, Abeed",
-year = "2026",
-url = "https://aclanthology.org/2026.cl4health-1",
+@inproceedings{rajwal2026diagnostic,
+  title     = {Diagnostic Reasoning with Large Language Models for a Rare Disease: Case Study of Primary Ciliary Dyskinesia},
+  author    = {Rajwal, Swati and Fain, Mary Ellen and Guglani, Lokesh and Sarker, Abeed},
+  booktitle = {Proceedings of the CL4Health Workshop},
+  year      = {2026},
+  url       = {https://aclanthology.org/2026.cl4health-1}
+}
+```
+```bibtex
+@article{rajwal2026assessing,
+  title   = {Assessing the Performance of Large Language Models for Diagnostic Reasoning for Primary Ciliary Dyskinesia in Pediatric Patients},
+  author  = {Rajwal, Swati and Fain, Mary Ellen and Diaz-Asper, Kiri and Silva, George Lucas and Sarker, Abeed and Guglani, Lokesh},
+  journal = {American Journal of Respiratory and Critical Care Medicine},
+  year    = {2026},
+  doi     = {}
 }
 ```
 ### Participating Institutions
