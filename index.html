@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ===== Primary SEO ===== -->
+  <title>AI for Primary Ciliary Dyskinesia (PCD) | Large Language Models for Rare Disease Diagnosis</title>
+  <meta name="description" content="Research on using AI and large language models (LLMs) to help recognize primary ciliary dyskinesia (PCD), a rare pediatric lung disease, earlier from clinical notes. Emory University and Children's Healthcare of Atlanta.">
+  <meta name="keywords" content="primary ciliary dyskinesia, PCD, PCD diagnosis, AI, artificial intelligence, large language models, LLM, rare disease, rare disease diagnosis, diagnostic reasoning, clinical NLP, pediatric pulmonology, Emory University, Children's Healthcare of Atlanta">
+  <meta name="author" content="Swati Rajwal, Mary Ellen Fain, Lokesh Guglani, Abeed Sarker">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://scholarly-code.github.io/pcd-diagnosis-llm-study/">
+
+  <!-- ===== Open Graph / social previews ===== -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AI for Primary Ciliary Dyskinesia">
+  <meta property="og:title" content="AI for Primary Ciliary Dyskinesia (PCD)">
+  <meta property="og:description" content="Can large language models help catch a rare pediatric lung disease earlier? Research from Emory University and Children's Healthcare of Atlanta.">
+  <meta property="og:url" content="https://scholarly-code.github.io/pcd-diagnosis-llm-study/">
+  <meta property="og:image" content="https://scholarly-code.github.io/pcd-diagnosis-llm-study/flowchart.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI for Primary Ciliary Dyskinesia (PCD)">
+  <meta name="twitter:description" content="Can large language models help catch a rare pediatric lung disease earlier? Research from Emory University and Children's Healthcare of Atlanta.">
+  <meta name="twitter:image" content="https://scholarly-code.github.io/pcd-diagnosis-llm-study/flowchart.png">
+
+  <!-- ===== Structured data (schema.org) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ResearchProject",
+    "name": "AI for Primary Ciliary Dyskinesia (PCD)",
+    "alternateName": "Large Language Models for Primary Ciliary Dyskinesia",
+    "url": "https://scholarly-code.github.io/pcd-diagnosis-llm-study/",
+    "description": "Research on using large language models to support earlier recognition of primary ciliary dyskinesia, a rare genetic lung disease, from clinical documentation.",
+    "keywords": "primary ciliary dyskinesia, PCD, large language models, AI, rare disease diagnosis, clinical NLP",
+    "parentOrganization": [
+      { "@type": "CollegeOrUniversity", "name": "Emory University" },
+      { "@type": "Hospital", "name": "Children's Healthcare of Atlanta" }
+    ],
+    "funder": { "@type": "Organization", "name": "Anthropic", "description": "AI for Science rare disease research grant" },
+    "member": [
+      { "@type": "Person", "name": "Swati Rajwal", "url": "https://swati-rajwal.github.io/", "affiliation": "Emory University" },
+      { "@type": "Person", "name": "Mary Ellen Fain", "url": "https://www.choa.org/doctors/mary-ellen-middleton-fain", "affiliation": "Emory University; Children's Healthcare of Atlanta" },
+      { "@type": "Person", "name": "Lokesh Guglani", "url": "https://www.choa.org/doctors/lokesh-guglani", "affiliation": "Emory University; Children's Healthcare of Atlanta" },
+      { "@type": "Person", "name": "Abeed Sarker", "url": "https://winshipcancer.emory.edu/profiles/sarker-abeed.php", "affiliation": "Emory University" }
+    ],
+    "subjectOf": [
+      { "@type": "ScholarlyArticle", "headline": "Diagnostic Reasoning with Large Language Models for a Rare Disease: Case Study of Primary Ciliary Dyskinesia", "url": "https://aclanthology.org/2026.cl4health-1.27/", "identifier": "https://doi.org/10.63317/3zvnibnkbvsc", "datePublished": "2026-05" },
+      { "@type": "ScholarlyArticle", "headline": "Assessing the Performance of Large Language Models for Diagnostic Reasoning for Primary Ciliary Dyskinesia in Pediatric Patients", "identifier": "https://doi.org/10.1093/ajrccm/aamag162.1273", "datePublished": "2026" },
+      { "@type": "ScholarlyArticle", "headline": "Note-Anchoring & Opacity of Uncertainty as Grand Challenges for Clinical LLM Evaluation", "identifier": "https://doi.org/10.1145/3806096.3844864", "datePublished": "2026" },
+      { "@type": "ScholarlyArticle", "headline": "Building Evidence-Centered Digital Libraries for Rare Disease Trajectories", "identifier": "https://doi.org/10.1145/3805696.3847126", "datePublished": "2026" }
+    ]
+  }
+  </script>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f4e79'/%3E%3Cpath d='M9 22c3-9 5-12 7-12s4 3 7 12' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --bg-soft: #f5f6f8;
+      --ink: #1d1d1f;
+      --ink-2: #4a4a4f;
+      --ink-3: #6e6e75;
+      --line: #e3e4e8;
+      --accent: #1f4e79;
+      --accent-soft: #e8eff7;
+      --link: #2160a8;
+      --btn: #2b2b2e;
+      --maxw: 960px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font-family: "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+    .narrow { max-width: 820px; margin: 0 auto; }
+
+    /* ---------- Hero ---------- */
+    header.hero { text-align: center; padding: 64px 0 36px; }
+    h1.title {
+      font-size: clamp(30px, 4.6vw, 44px); line-height: 1.18; font-weight: 700;
+      margin: 0 auto 10px; max-width: 860px; letter-spacing: -0.01em;
+    }
+    .subtitle { font-size: 19px; color: var(--ink-2); margin: 0 auto 26px; max-width: 700px; }
+    .authors { font-size: 19px; margin-bottom: 6px; }
+    .authors a { display: inline-block; margin: 0 10px; white-space: nowrap; color: var(--link); }
+    .authors sup, .affils sup { font-size: 12px; color: var(--ink-3); }
+    .affils { font-size: 15px; color: var(--ink-2); }
+    .affils span { display: inline-block; margin: 0 9px; }
+
+    .logos { display: flex; justify-content: center; align-items: center; gap: 44px; flex-wrap: wrap; margin: 26px 0 28px; }
+    .logos a { display: inline-flex; align-items: center; }
+    .logos img { height: 52px; width: auto; display: block; }
+    .logo-text { font-weight: 700; font-size: 17px; color: var(--accent); border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px; }
+
+    .buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; background: var(--btn); color: #fff;
+      font-size: 15px; font-weight: 500; padding: 9px 18px; border-radius: 999px;
+      transition: background .15s, transform .15s;
+    }
+    .btn:hover { background: #000; text-decoration: none; transform: translateY(-1px); }
+    .btn svg { width: 17px; height: 17px; fill: currentColor; flex: none; }
+
+    .grant {
+      display: flex; align-items: center; gap: 14px; text-align: left; max-width: 720px;
+      margin: 30px auto 0; padding: 14px 18px; border: 1px solid var(--line); border-radius: 12px;
+      background: var(--bg-soft); font-size: 15px; color: var(--ink-2);
+    }
+    .grant .badge { flex: none; width: 40px; height: 40px; border-radius: 10px; background: var(--accent); display: grid; place-items: center; }
+    .grant .badge svg { width: 22px; height: 22px; fill: #fff; }
+    .grant strong { color: var(--ink); }
+
+    /* ---------- Sections ---------- */
+    section { padding: 42px 0; border-top: 1px solid var(--line); }
+    h2 { font-size: 28px; font-weight: 700; text-align: center; margin: 0 0 22px; letter-spacing: -0.01em; }
+    p { margin: 0 0 14px; }
+    .callout {
+      padding: 16px 20px; border-left: 4px solid var(--accent); background: var(--accent-soft);
+      border-radius: 0 10px 10px 0; margin-top: 18px; font-size: 16px;
+    }
+
+    /* ---------- News ---------- */
+    .news { list-style: none; padding: 0; margin: 0 auto; max-width: 820px; }
+    .news li { display: grid; grid-template-columns: 100px 1fr; gap: 14px; padding: 8px 0; }
+    .news .date { font-weight: 600; color: var(--ink-3); font-size: 15px; }
+
+    /* ---------- Publications ---------- */
+    .pubs { list-style: none; padding: 0; margin: 0; }
+    .pubs > li { display: grid; grid-template-columns: 150px 1fr; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .pubs > li:last-child { border-bottom: 0; }
+    .pubs > li > div { min-width: 0; }
+    .pub-venue {
+      font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+      color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 8px 10px;
+      text-align: center; align-self: start; line-height: 1.35;
+    }
+    .pub-title { font-weight: 600; font-size: 16.5px; line-height: 1.45; }
+    .pub-meta { font-size: 14.5px; color: var(--ink-2); margin-top: 3px; }
+    .pub-what { font-size: 14px; color: var(--ink-3); margin-top: 4px; }
+    .pub-links { margin-top: 8px; font-size: 14.5px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .pub-links a, .cite-toggle {
+      font: 500 13.5px "Noto Sans", sans-serif; padding: 4px 12px; border-radius: 999px;
+      border: 1px solid var(--line); background: #fff; color: var(--ink); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .pub-links a:hover, .cite-toggle:hover { background: var(--bg-soft); text-decoration: none; }
+    .cite-toggle[aria-expanded="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .cite-toggle .chev { transition: transform .15s; display: inline-block; font-size: 10px; }
+    .cite-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .cite-box { position: relative; margin-top: 10px; }
+    .cite-box[hidden] { display: none; }
+    pre {
+      background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px;
+      padding: 16px 18px; overflow-x: auto; font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 13px; line-height: 1.55; margin: 0;
+    }
+    .copy {
+      position: absolute; top: 8px; right: 8px; font: 500 12.5px "Noto Sans", sans-serif;
+      background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 4px 10px; cursor: pointer; color: var(--ink);
+    }
+    .copy:hover { background: var(--bg-soft); }
+
+    /* ---------- Team ---------- */
+    .team { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: center; }
+    .person { color: inherit; padding: 12px 6px; border-radius: 12px; transition: background .15s; }
+    .person:hover { background: var(--bg-soft); text-decoration: none; }
+    .person .avatar {
+      width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 10px; background: var(--accent-soft);
+      color: var(--accent); display: grid; place-items: center; font-weight: 700; font-size: 22px;
+      position: relative; overflow: hidden;
+    }
+    .person .avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .person .name { font-weight: 600; font-size: 16px; color: var(--link); }
+    .person .role { font-size: 13.5px; color: var(--ink-2); line-height: 1.4; }
+
+    footer { padding: 34px 0 48px; border-top: 1px solid var(--line); text-align: center; font-size: 14px; color: var(--ink-3); }
+    footer p { margin: 4px 0; }
+
+    @media (max-width: 760px) {
+      body { font-size: 16px; }
+      header.hero { padding-top: 40px; }
+      .team { grid-template-columns: repeat(2, 1fr); }
+      .pubs > li { grid-template-columns: 1fr; gap: 8px; }
+      .pub-venue { justify-self: start; }
+      .news li { grid-template-columns: 1fr; gap: 0; }
+      .logos { gap: 28px; }
+      .logos img { height: 42px; }
+      .wrap { padding: 0 16px; }
+    }
+  </style>
+  <script>
+    /* Show the institution name if a logo file is missing */
+    function logoFallback(img) {
+      var s = document.createElement("span");
+      s.className = "logo-text";
+      s.textContent = img.alt;
+      img.replaceWith(s);
+    }
+  </script>
+</head>
+<body>
+
+<!-- ======================= HERO ======================= -->
+<header class="hero">
+  <div class="wrap">
+    <h1 class="title">AI for Primary Ciliary Dyskinesia</h1>
+    <p class="subtitle">Using large language models to help recognize a rare pediatric lung disease earlier</p>
+
+    <div class="authors">
+      <a href="https://swati-rajwal.github.io/" target="_blank" rel="noopener">Swati Rajwal<sup>1</sup></a>
+      <a href="https://www.choa.org/doctors/mary-ellen-middleton-fain" target="_blank" rel="noopener">Mary Ellen Fain<sup>2,3</sup></a>
+      <a href="https://www.choa.org/doctors/lokesh-guglani" target="_blank" rel="noopener">Lokesh Guglani<sup>2,3</sup></a>
+      <a href="https://winshipcancer.emory.edu/profiles/sarker-abeed.php" target="_blank" rel="noopener">Abeed Sarker<sup>1</sup></a>
+    </div>
+    <div class="affils">
+      <span><sup>1</sup>Department of Biomedical Informatics, Emory University</span>
+      <span><sup>2</sup>Department of Pediatrics, Emory University</span>
+      <span><sup>3</sup>Children's Healthcare of Atlanta</span>
+    </div>
+
+    <!-- Logos: upload emory-logo.png and choa-logo.png next to this file. If missing, the institution name is shown instead. -->
+    <div class="logos">
+      <a href="https://www.emory.edu/" target="_blank" rel="noopener"><img src="emory-logo.png" alt="Emory University" onerror="logoFallback(this)"></a>
+      <a href="https://www.choa.org/" target="_blank" rel="noopener"><img src="choa-logo.png" alt="Children's Healthcare of Atlanta" onerror="logoFallback(this)"></a>
+    </div>
+
+    <div class="buttons">
+      <a class="btn" href="#publications">
+        <svg viewBox="0 0 24 24"><path d="M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V9h5.5L13 3.5zM8 13h8v1.6H8V13zm0 3.4h8V18H8v-1.6z"/></svg>
+        Publications
+      </a>
+      <a class="btn" href="https://github.com/Scholarly-Code/pcd-diagnosis-llm-study" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
+        Code
+      </a>
+      <a class="btn" href="https://docs.google.com/gview?embedded=1&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2FScholarly-Code%2Fpcd-diagnosis-llm-study%2Fmain%2FAnnotation_Guideline.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5V3zm3 5v1.6h8V8H8zm0 4v1.6h8V12H8zm0 4v1.6h5V16H8z"/></svg>
+        Annotation Guideline
+      </a>
+    </div>
+
+    <div class="grant">
+      <div class="badge"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.1 6.6.8-4.9 4.6 1.3 6.5L12 16.8 6.1 20l1.3-6.5L2.5 8.9l6.6-.8z"/></svg></div>
+      <div>
+        <strong>Recipient of Anthropic's AI for Science rare disease research grant.</strong>
+        Our project was selected for <a href="https://www.anthropic.com/news/rare-disease-research-grants" target="_blank" rel="noopener">Anthropic's AI for Science rare disease research grants</a> (2026).
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ======================= ABOUT ======================= -->
+<section id="about">
+  <div class="wrap narrow">
+    <h2>About the Project</h2>
+    <p>
+      <strong>Primary ciliary dyskinesia (PCD)</strong> is a rare, inherited disease in which the tiny hair-like structures (cilia) that clear mucus from the airways do not work properly. Its early signs, such as a chronic wet cough and repeated ear, sinus, and chest infections, look a lot like common childhood illnesses, so many children wait years for a correct diagnosis.
+    </p>
+    <p>
+      We study whether <strong>large language models (LLMs)</strong> can help clinicians recognize PCD sooner by reading routine clinical notes. In our first study, open-source LLMs reviewed de-identified notes from children's first pulmonology visits and flagged which children might have PCD, with clinicians assessing both the answers and the reasoning behind them. The models caught nearly all true cases but also flagged many children without PCD, which suggests they are best suited as an early-warning aid that supports, rather than replaces, specialist judgment.
+    </p>
+    <div class="callout">
+      <strong>This is an ongoing research program.</strong> We are currently working on further projects at the intersection of AI and rare disease. Check back for updates.
+    </div>
+  </div>
+</section>
+
+<!-- ======================= NEWS ======================= -->
+<section id="news">
+  <div class="wrap">
+    <h2>News</h2>
+    <ul class="news">
+      <li><span class="date">2026</span><span>Our project was selected for <a href="https://www.anthropic.com/news/rare-disease-research-grants" target="_blank" rel="noopener">Anthropic's AI for Science rare disease research grants</a>.</span></li>
+      <li><span class="date">2026</span><span>Paper on grand challenges for clinical LLM evaluation published in the <a href="https://doi.org/10.1145/3806096.3844864" target="_blank" rel="noopener">ACM AI Summit 2026</a> proceedings.</span></li>
+      <li><span class="date">2026</span><span>Doctoral consortium paper on evidence-centered digital libraries for rare disease trajectories <a href="https://doi.org/10.1145/3805696.3847126" target="_blank" rel="noopener">published by ACM</a>.</span></li>
+      <li><span class="date">May 2026</span><span>Full paper presented at the <a href="https://aclanthology.org/2026.cl4health-1.27/" target="_blank" rel="noopener">CL4Health workshop @ LREC 2026</a> in Palma, Mallorca.</span></li>
+      <li><span class="date">May 2026</span><span>Clinical findings presented at the <a href="https://ats2026.d365.events/education/abstracts/abstracts/e5f1a21d-87cc-4c3c-af2a-72379193ca22" target="_blank" rel="noopener">American Thoracic Society (ATS) 2026 International Conference</a> and published in the <a href="https://doi.org/10.1093/ajrccm/aamag162.1273" target="_blank" rel="noopener">American Journal of Respiratory and Critical Care Medicine</a>.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================= PUBLICATIONS ======================= -->
+<section id="publications">
+  <div class="wrap">
+    <h2>Publications</h2>
+    <ul class="pubs">
+
+      <li>
+        <div class="pub-venue">CL4Health<br>@ LREC 2026</div>
+        <div>
+          <div class="pub-title">Diagnostic Reasoning with Large Language Models for a Rare Disease: Case Study of Primary Ciliary Dyskinesia</div>
+          <div class="pub-meta">Swati Rajwal, Mary Ellen Fain, Lokesh Guglani, Abeed Sarker. <em>Proceedings of the Third Workshop on Patient-Oriented Language Processing (CL4Health) @ LREC 2026</em>, pp. 307–319. Palma, Mallorca, Spain.</div>
+          <div class="pub-what">CL4Health is a workshop on language technology for patient care, held with LREC, a major international conference on natural language processing resources and evaluation.</div>
+          <div class="pub-links">
+            <a href="https://aclanthology.org/2026.cl4health-1.27.pdf" target="_blank" rel="noopener">PDF</a>
+            <a href="https://aclanthology.org/2026.cl4health-1.27/" target="_blank" rel="noopener">ACL Anthology</a>
+            <a href="https://doi.org/10.63317/3zvnibnkbvsc" target="_blank" rel="noopener">DOI</a>
+            <button class="cite-toggle" type="button" aria-expanded="false" aria-controls="cite-1">Cite <span class="chev">▼</span></button>
+          </div>
+          <div class="cite-box" id="cite-1" hidden>
+            <button class="copy" type="button">Copy</button>
+<pre>@inproceedings{rajwal-etal-2026-diagnostic,
+    title     = "Diagnostic Reasoning with Large Language Models for a Rare Disease:
+                 Case Study of Primary Ciliary Dyskinesia",
+    author    = "Rajwal, Swati and Fain, Mary Ellen and Guglani, Lokesh and Sarker, Abeed",
+    editor    = "Gupta, Deepak and Thompson, Paul and Ananiadou, Sophia and Demner-Fushman, Dina",
+    booktitle = "Proceedings of the Third Workshop on Patient-Oriented Language Processing
+                 ({CL}4{H}ealth) @ {LREC} 2026",
+    month     = may,
+    year      = "2026",
+    address   = "Palma, Mallorca (Spain)",
+    publisher = "ELRA Language Resources Association (ELRA)",
+    url       = "https://aclanthology.org/2026.cl4health-1.27/",
+    doi       = "10.63317/3zvnibnkbvsc",
+    pages     = "307--319"
+}</pre>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="pub-venue">AJRCCM<br>ATS 2026</div>
+        <div>
+          <div class="pub-title">Assessing the Performance of Large Language Models for Diagnostic Reasoning for Primary Ciliary Dyskinesia in Pediatric Patients</div>
+          <div class="pub-meta">Swati Rajwal, Mary Ellen Fain, Kiri Diaz-Asper, George Lucas Silva, Abeed Sarker, Lokesh Guglani. <em>American Journal of Respiratory and Critical Care Medicine</em>, 2026 (ATS 2026 conference abstract).</div>
+          <div class="pub-what">ATS is the American Thoracic Society International Conference, a leading annual meeting for lung and critical-care medicine. Its accepted abstracts are published in AJRCCM, the society's flagship medical journal.</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1093/ajrccm/aamag162.1273" target="_blank" rel="noopener">Journal</a>
+            <a href="https://ats2026.d365.events/education/abstracts/abstracts/e5f1a21d-87cc-4c3c-af2a-72379193ca22" target="_blank" rel="noopener">Conference page</a>
+            <button class="cite-toggle" type="button" aria-expanded="false" aria-controls="cite-2">Cite <span class="chev">▼</span></button>
+          </div>
+          <div class="cite-box" id="cite-2" hidden>
+            <button class="copy" type="button">Copy</button>
+<pre>@article{rajwal2026assessing,
+    title   = "Assessing the Performance of Large Language Models for Diagnostic Reasoning
+               for Primary Ciliary Dyskinesia in Pediatric Patients",
+    author  = "Rajwal, Swati and Fain, Mary Ellen and Diaz-Asper, Kiri and
+               Silva, George Lucas and Sarker, Abeed and Guglani, Lokesh",
+    journal = "American Journal of Respiratory and Critical Care Medicine",
+    year    = "2026",
+    note    = "ATS 2026 International Conference abstract",
+    doi     = "10.1093/ajrccm/aamag162.1273"
+}</pre>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="pub-venue">ACM<br>AI Summit 2026</div>
+        <div>
+          <div class="pub-title">Note-Anchoring &amp; Opacity of Uncertainty as Grand Challenges for Clinical LLM Evaluation</div>
+          <div class="pub-meta">Swati Rajwal, et al. <em>ACM AI Summit 2026</em>, Atlanta, GA.</div>
+          <div class="pub-what">ACM is the Association for Computing Machinery, the world's largest computing society.</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1145/3806096.3844864" target="_blank" rel="noopener">Proceedings</a>
+            <button class="cite-toggle" type="button" aria-expanded="false" aria-controls="cite-3">Cite <span class="chev">▼</span></button>
+          </div>
+          <div class="cite-box" id="cite-3" hidden>
+            <button class="copy" type="button">Copy</button>
+<pre>@inproceedings{rajwal2026noteanchoring,
+    title     = "Note-Anchoring \&amp; Opacity of Uncertainty as Grand Challenges
+                 for Clinical {LLM} Evaluation",
+    author    = "Rajwal, Swati and others",
+    booktitle = "Proceedings of the ACM AI Summit 2026",
+    address   = "Atlanta, GA, USA",
+    publisher = "Association for Computing Machinery",
+    year      = "2026",
+    doi       = "10.1145/3806096.3844864"
+}</pre>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="pub-venue">ACM<br>Doctoral Consortium</div>
+        <div>
+          <div class="pub-title">Building Evidence-Centered Digital Libraries for Rare Disease Trajectories</div>
+          <div class="pub-meta">Swati Rajwal. <em>Doctoral Consortium, ACM 2026</em>.</div>
+          <div class="pub-what">A doctoral consortium is a forum where PhD students present their dissertation research to senior researchers for feedback.</div>
+          <div class="pub-links">
+            <a href="https://doi.org/10.1145/3805696.3847126" target="_blank" rel="noopener">Proceedings</a>
+            <button class="cite-toggle" type="button" aria-expanded="false" aria-controls="cite-4">Cite <span class="chev">▼</span></button>
+          </div>
+          <div class="cite-box" id="cite-4" hidden>
+            <button class="copy" type="button">Copy</button>
+<pre>@inproceedings{rajwal2026building,
+    title     = "Building Evidence-Centered Digital Libraries for Rare Disease Trajectories",
+    author    = "Rajwal, Swati",
+    booktitle = "Doctoral Consortium, ACM 2026",
+    publisher = "Association for Computing Machinery",
+    year      = "2026",
+    doi       = "10.1145/3805696.3847126"
+}</pre>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+<!-- ======================= TEAM =======================
+     Headshots: add square photos at team/swati-rajwal.jpg, team/mary-ellen-fain.jpg,
+     team/lokesh-guglani.jpg, team/abeed-sarker.jpg. Initials show until a photo exists. -->
+<section id="team">
+  <div class="wrap">
+    <h2>Team</h2>
+    <div class="team">
+      <a class="person" href="https://swati-rajwal.github.io/" target="_blank" rel="noopener"><div class="avatar"><span>SR</span><img src="team/swati-rajwal.jpg" alt="" onerror="this.remove()"></div><div class="name">Swati Rajwal</div><div class="role">PhD Student, Computer Science &amp; Informatics<br>Emory University</div></a>
+      <a class="person" href="https://www.choa.org/doctors/mary-ellen-middleton-fain" target="_blank" rel="noopener"><div class="avatar"><span>MF</span><img src="team/mary-ellen-fain.jpg" alt="" onerror="this.remove()"></div><div class="name">Mary Ellen Fain</div><div class="role">Department of Pediatrics, Emory University<br>Children's Healthcare of Atlanta</div></a>
+      <a class="person" href="https://www.choa.org/doctors/lokesh-guglani" target="_blank" rel="noopener"><div class="avatar"><span>LG</span><img src="team/lokesh-guglani.jpg" alt="" onerror="this.remove()"></div><div class="name">Lokesh Guglani</div><div class="role">Department of Pediatrics, Emory University<br>Children's Healthcare of Atlanta</div></a>
+      <a class="person" href="https://winshipcancer.emory.edu/profiles/sarker-abeed.php" target="_blank" rel="noopener"><div class="avatar"><span>AS</span><img src="team/abeed-sarker.jpg" alt="" onerror="this.remove()"></div><div class="name">Abeed Sarker</div><div class="role">Department of Biomedical Informatics<br>Emory University</div></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>AI for Primary Ciliary Dyskinesia &middot; Emory University &amp; Children's Healthcare of Atlanta</p>
+    <p>Code released under the <a href="https://github.com/Scholarly-Code/pcd-diagnosis-llm-study/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a> &middot; <a href="https://github.com/Scholarly-Code/pcd-diagnosis-llm-study" target="_blank" rel="noopener">GitHub</a></p>
+  </div>
+</footer>
+
+<script>
+/* Citation toggles */
+document.querySelectorAll(".cite-toggle").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var box = document.getElementById(btn.getAttribute("aria-controls"));
+    var open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", open ? "false" : "true");
+    box.hidden = open;
+  });
+});
+
+/* Copy buttons */
+document.querySelectorAll(".cite-box .copy").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var txt = btn.parentElement.querySelector("pre").innerText;
+    function done() { btn.textContent = "Copied!"; setTimeout(function () { btn.textContent = "Copy"; }, 1600); }
+    function fallback() {
+      var ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta);
+      ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, fallback);
+    } else { fallback(); }
+  });
+});
+</script>
+</body>
+</html>
